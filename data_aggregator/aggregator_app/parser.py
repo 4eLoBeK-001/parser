@@ -14,6 +14,7 @@ def parse_news_habr():
     items = soup.select('.tm-articles-list__item')[:5]
 
     for item in items:
+        title = item.select_one('.tm-title').text
         link = item.select_one('a.tm-title__link')['href']
         absolute_link = 'https://habr.com' + link
 
@@ -21,7 +22,7 @@ def parse_news_habr():
         if not Article.objects.filter(url=absolute_link).exists():
 
             Article.objects.create(
-                title=item.text,
+                title=title,
                 url=absolute_link,
                 source=Article.SourceChoice.HABR
             )
