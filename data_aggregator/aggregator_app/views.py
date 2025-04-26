@@ -1,10 +1,10 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Article
 # Create your views here.
 
 def article_list(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('-publication_date')
     context = {
         'articles': articles
     }
@@ -18,3 +18,15 @@ def article_detail(request, article_id):
     }
     return render(request, 'aggregator_app/article_detail.html', context)
 
+
+def article_upvote(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    article.upvote()
+    
+    return redirect(request.META.get('HTTP_REFERER'))
+
+def article_downvote(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    article.downvote()
+    
+    return redirect(request.META.get('HTTP_REFERER'))

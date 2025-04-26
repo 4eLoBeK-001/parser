@@ -8,8 +8,8 @@
                 <h1 class="card-title">{{ article.title }}</h1>
                 <div class="mb-3">
                     <a href="{{ article.url }}" target="_blank" class="btn btn-primary">Читать оригинал</a>
-                    <a href="" class="btn btn-success ms-2">↑ Нравится</a>
-                    <a href="" class="btn btn-danger ms-2">↓ Не нравится</a>
+                    <a href="{% url 'article_upvote' article.id %}" class="btn btn-success ms-2">↑ Нравится ({{ article.upvotes }})</a>
+                    <a href="{% url 'article_downvote' article.id %}" class="btn btn-danger ms-2">↓ Не нравится ({{ article.downvotes }})</a>
                 </div>
                 <div class="text-muted mb-3">
                     <span class="badge bg-secondary">{{ article.source }}</span>

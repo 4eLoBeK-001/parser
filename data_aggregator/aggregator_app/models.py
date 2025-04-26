@@ -14,5 +14,17 @@ class Article(models.Model):
     upvotes = models.IntegerField(default=0, help_text='Положительный голос')
     downvotes = models.IntegerField(default=0, help_text='Отрицательный голос')
 
+    @property
+    def rating(self):
+        return self.upvotes + self.downvotes
+
     def __str__(self):
         return self.title
+    
+    def upvote(self):
+        self.upvotes += 1
+        self.save()
+
+    def downvote(self):
+        self.downvotes -= 1
+        self.save()
