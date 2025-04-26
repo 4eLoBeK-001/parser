@@ -41,3 +41,23 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Комментарий от {self.author_name} на {self.article.title}'
+
+
+class ArticleStats(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='statistic')
+    views = models.IntegerField(default=0)
+    unique_visitors = models.JSONField(default=list, help_text='Список уникальных поситителей')
+
+    # Для уникальных посетителей
+    def add_view(self, request):
+        self.views += 1
+        # Если пользователь авторизован, то уникальный визит зависит от его его id.
+        # Если пользователь анонимный, то уникальный визит зависит от его ip адреса.
+        visitor = request.user.id if request.user.is_authenticated else request.META.get('REMOTE_ADDR')
+        
+        if visitor not in self.unique_visitors:
+            self.unique_visitors.append(visitor)
+
+        self.save()
+
+

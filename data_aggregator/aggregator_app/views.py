@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CreateCommentForm
-from .models import Article
+from .models import Article, ArticleStats
 # Create your views here.
 
 def article_list(request):
@@ -14,6 +14,8 @@ def article_list(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
+    stat, _ = ArticleStats.objects.get_or_create(article=article)
+    stat.add_view(request)
 
     if request.method == 'POST':
         form = CreateCommentForm(request.POST)
