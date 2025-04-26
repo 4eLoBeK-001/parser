@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-25f=hav$2+h_9(d@*88f%ss0)(%covh2da#j70%ya6%n-&*@k4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.121']
 
 
 # Application definition
@@ -74,8 +74,12 @@ WSGI_APPLICATION = 'data_aggregator.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbPostgres',
+        'USER': 'CustomUser',
+        'PASSWORD': 'postgress1',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
