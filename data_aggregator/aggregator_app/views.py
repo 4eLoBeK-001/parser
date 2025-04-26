@@ -4,7 +4,7 @@ from .models import Article
 # Create your views here.
 
 def article_list(request):
-    articles = Article.objects.all().order_by('-publication_date')
+    articles = Article.objects.all()
     context = {
         'articles': articles
     }
