@@ -1,7 +1,8 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CreateCommentForm
-from .models import Article, ArticleStats
+from .models import Article, ArticleStats, Vote
 # Create your views here.
 
 def article_list(request):

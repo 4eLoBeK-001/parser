@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
@@ -61,3 +62,9 @@ class ArticleStats(models.Model):
         self.save()
 
 
+class Vote(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), null=True, blank=True, on_delete=models.SET_NULL)
+    ip_address = models.CharField(max_length=45)
+    vote_type = models.SmallIntegerField(choices=((1, 'Upvote'), (-1, 'Downvote')))
+    created_at = models.DateTimeField(auto_now_add=True)
