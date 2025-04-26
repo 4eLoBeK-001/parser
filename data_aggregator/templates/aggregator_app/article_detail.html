@@ -21,4 +21,37 @@
     </div>
 </div>
 
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Комментарии</h3>
+                
+                <!-- Форма добавления комментария -->
+                <form method="post" class="mb-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+                
+                <!-- Список комментариев -->
+                <div class="list-group">
+                    {% for comment in article.comments.all %}
+                    <div class="list-group-item mb-2">
+                        <div class="d-flex justify-content-between">
+                            <strong>{{ comment.author_name }}</strong>
+                            <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+                        </div>
+                        <p class="mb-1">{{ comment.text }}</p>
+                    </div>
+                    {% empty %}
+                    <p>Комментариев нет.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

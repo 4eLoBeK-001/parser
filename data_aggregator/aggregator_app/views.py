@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
+from .forms import CreateCommentForm
 from .models import Article
 # Create your views here.
 
@@ -13,8 +14,21 @@ def article_list(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
+
+    if request.method == 'POST':
+        form = CreateCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article=article
+            comment.save()
+            return redirect(request.META.get('HTTP_REFERER'))
+            
+    else:
+        form = CreateCommentForm()
+
     context = {
-        'article': article
+        'article': article,
+        'form': form
     }
     return render(request, 'aggregator_app/article_detail.html', context)
 
