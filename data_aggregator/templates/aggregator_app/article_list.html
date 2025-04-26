@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
-                    <a href="" class="text-decoration-none">{{ article.title }}</a>
+                    <a href="{% url 'acrticle_detail' article.id %}" class="text-decoration-none">{{ article.title }}</a>
                 </h5>
                 <div class="d-flex gap-2 mb-2">
                     <a href="" class="btn btn-sm btn-success">↑</a>
@@ -15,15 +15,15 @@
                 </div>
                 <div class="card-text text-muted small">
                     <span class="badge bg-secondary">{{ article.source }}</span>
-                    <span class="ms-2">{{ article.publication_date }}</span>
-                    <span class="ms-2">Rating: {{ article.rating }}</span>
+                    <span class="ms-2">{{ article.publication_date|date:"M d, Y H:i" }}</span>
+                    <span class="ms-2">Рейтинг: {{ article.rating }}</span>
                 </div>
             </div>
         </div>
     </div>
     {% empty %}
     <div class="col-12">
-        <p class="text-muted text-center">No articles available.</p>
+        <p class="text-muted text-center">Нет доступных статей.</p>
     </div>
     {% endfor %}
 </div>

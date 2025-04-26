@@ -14,7 +14,7 @@ def parse_news_habr():
     items = soup.select('.tm-articles-list__item')[:5]
 
     for item in items:
-        title = item.select_one('.tm-title').text
+        title = item.select_one('.tm-title').text.strip()
         link = item.select_one('a.tm-title__link')['href']
         absolute_link = 'https://habr.com' + link
 
