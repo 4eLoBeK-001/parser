@@ -7,7 +7,12 @@
 <body class="bg-light">
     <div class="container mt-4">
         <header class="mb-4">
-            <h1 class="display-4 text-center">News Aggregator</h1>
+            <h1 class="display-4 text-center">
+                {% block heading %}
+                {{ heading|default:"Агрегатор новостей" }}
+                {{ source }}
+                {% endblock heading %}
+            </h1>
         </header>
         <main>
             {% block content %}{% endblock %}

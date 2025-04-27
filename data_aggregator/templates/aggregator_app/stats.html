@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block heading %}
+{{ heading }}
+{% endblock heading %}
+
+
 {% block content %}
 <div class="container mt-4">
     <h2>Статистика</h2>
@@ -27,6 +32,7 @@
                 </li>
                 {% endfor %}
             </ul>
+            <hr>
             <h5>По просмотрам:</h5>
             <ul class="list-group">
                 {% for article in top_views_articles %}

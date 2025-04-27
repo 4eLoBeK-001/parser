@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block heading %}
+{{ block.super }}
+{% endblock heading %}
+
+
 {% block content %}
 <div class="row">
     {% for article in articles %}

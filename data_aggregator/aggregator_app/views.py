@@ -9,7 +9,8 @@ from .models import Article, ArticleStats, Vote
 def article_list(request):
     articles = Article.objects.all()
     context = {
-        'articles': articles
+        'articles': articles,
+        'source': Article.SourceChoice.HABR
     }
     return render(request, 'aggregator_app/article_list.html', context)
 
@@ -38,16 +39,17 @@ def article_detail(request, article_id):
 
 def article_stats(request):
     articles = Article.objects.all()
-    top_views_articles = Article.objects.all().order_by('-statistic__views')[:5]
-    top_rating_articles = Article.objects.all().order_by('-upvotes')[:5]
+    top_views_articles = articles.order_by('-statistic__views')[:5]
+    top_rating_articles = articles.order_by('-upvotes')[:5]
 
     context = {
         'total_articles': articles.count(),
-        
+
         'most_viewed': top_views_articles.first(),
         'top_views_articles': top_views_articles,
 
-        'top_rating_articles': top_rating_articles
+        'top_rating_articles': top_rating_articles,
+        'heading': 'Статистика'
     }
     return render(request, 'aggregator_app/stats.html', context)
 
