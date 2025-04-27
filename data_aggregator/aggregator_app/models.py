@@ -68,3 +68,6 @@ class Vote(models.Model):
     ip_address = models.CharField(max_length=45)
     vote_type = models.SmallIntegerField(choices=((1, 'Upvote'), (-1, 'Downvote')))
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'user- {self.user} | article - {self.article}'

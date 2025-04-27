@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -37,13 +38,34 @@ def article_detail(request, article_id):
 
 
 def article_upvote(request, article_id):
-    article = get_object_or_404(Article, id=article_id)
-    article.upvote()
+    _handle_vote(request, article_id, 1)
     
     return redirect(request.META.get('HTTP_REFERER'))
 
 def article_downvote(request, article_id):
-    article = get_object_or_404(Article, id=article_id)
-    article.downvote()
+    _handle_vote(request, article_id, -1)
     
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+def _handle_vote(request, article_id, vote_type):
+    article = get_object_or_404(Article, id=article_id)
+    user = request.user
+    ip = request.META.get('REMOTE_ADDR')
+
+    vote = Vote.objects.filter(Q(article=article) & (Q(user=user) | Q(ip_address=ip))).exists()
+    
+    if vote:
+        raise PermissionDenied('Вы уже голосовали за эту статью')
+    else:
+        Vote.objects.create(
+            article=article, 
+            user=user if user.is_authenticated else None,
+            ip_address=ip,
+            vote_type=vote_type
+        )
+    
+    if vote_type==1:
+        article.upvote()
+    else:
+        article.downvote()
