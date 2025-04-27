@@ -28,7 +28,9 @@
             <ul class="list-group">
                 {% for article in top_rating_articles %}
                 <li class="list-group-item">
-                    {{ article.title }} (Рейтинг: {{ article.rating }})
+                    <span class="badge bg-secondary">{{ article.source }}</span>
+                    <a href="{% url 'article_detail' article.id %}" class="text-decoration-none">{{ article.title }}</a>
+                    (Рейтинг: {{ article.rating }})
                 </li>
                 {% endfor %}
             </ul>
@@ -37,7 +39,9 @@
             <ul class="list-group">
                 {% for article in top_views_articles %}
                 <li class="list-group-item">
-                    {{ article.title }} (Просмотров: {{ article.statistic.first.views }})
+                    <span class="badge bg-secondary">{{ article.source }}</span>
+                    <a href="{% url 'article_detail' article.id %}" class="text-decoration-none">{{ article.title }}</a>
+                    (Просмотров: {{ article.statistic.first.views }})
                 </li>
                 {% endfor %}
             </ul>
