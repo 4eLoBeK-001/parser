@@ -36,6 +36,21 @@ def article_detail(request, article_id):
     }
     return render(request, 'aggregator_app/article_detail.html', context)
 
+def article_stats(request):
+    articles = Article.objects.all()
+    top_views_articles = Article.objects.all().order_by('-statistic__views')[:5]
+    top_rating_articles = Article.objects.all().order_by('-upvotes')[:5]
+
+    context = {
+        'total_articles': articles.count(),
+        
+        'most_viewed': top_views_articles.first(),
+        'top_views_articles': top_views_articles,
+
+        'top_rating_articles': top_rating_articles
+    }
+    return render(request, 'aggregator_app/stats.html', context)
+
 
 def article_upvote(request, article_id):
     _handle_vote(request, article_id, 1)

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Статистика</h2>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Всего статей: {{ total_articles }}</h5>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Самая популярная статья:</h5>
+            <p>{{ most_viewed.title }} ({{ most_viewed.statistic.first.views }} просмотров)</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5>Топ-5 статей по рейтингу:</h5>
+            <ul class="list-group">
+                {% for article in top_rating_articles %}
+                <li class="list-group-item">
+                    {{ article.title }} (Рейтинг: {{ article.rating }})
+                </li>
+                {% endfor %}
+            </ul>
+            <h5>По просмотрам:</h5>
+            <ul class="list-group">
+                {% for article in top_views_articles %}
+                <li class="list-group-item">
+                    {{ article.title }} (Просмотров: {{ article.statistic.first.views }})
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
