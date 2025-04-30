@@ -6,8 +6,26 @@ from .forms import CreateCommentForm
 from .models import Article, ArticleStats, Vote
 # Create your views here.
 
+
+def article_list(request):
+    source = request.GET.get('source', 'all')
+
+    articles = Article.objects.all().order_by('-publication_date')
+
+    if source != 'all':
+        articles = articles.filter(source__iexact=source)
+
+    sources = Article.objects.values_list('source', flat=True).distinct()
+
+    context = {
+        'articles': articles,
+        'sources': sources,
+        'current_source': source
+    }
+    return render(request, 'aggregator_app/article_list.html', context)
+
 def habr_article_list(request):
-    articles = Article.objects.filter(source='Habr')
+    articles = Article.objects.filter(source='Habr').order_by('-publication_date')
     context = {
         'articles': articles,
         'source': Article.SourceChoice.HABR
@@ -16,12 +34,13 @@ def habr_article_list(request):
 
 
 def vc_article_list(request):
-    articles = Article.objects.filter(source='Vc')
+    articles = Article.objects.filter(source='Vc').order_by('-publication_date')
     context = {
         'articles': articles,
         'source': Article.SourceChoice.VC
     }
     return render(request, 'aggregator_app/vc_article_list.html', context)
+
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)

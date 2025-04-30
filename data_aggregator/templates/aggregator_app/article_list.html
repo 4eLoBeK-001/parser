@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Фильтры по источникам -->
+    <div class="mb-4">
+        <div class="btn-group" role="group">
+            <a href="?source=all" class="btn btn-outline-secondary {% if current_source == 'all' %}active{% endif %}">
+                Все новости
+            </a>
+            {% for source in sources %}
+                <a href="?source={{ source }}" class="btn btn-outline-secondary {% if current_source == source %}active{% endif %}">
+                    {{ source }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Список статей -->
+    <div class="row">
+        {% for article in articles %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="badge bg-primary mb-2">{{ article.source }}</span>
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text text-muted small">
+                        {{ article.publication_date|date:"d.m.Y H:i" }}
+                        <span class="ms-2">★ {{ article.rating }}</span>
+                    </p>
+                    <a href="{{ article.url }}" target="_blank" class="btn btn-sm btn-outline-primary">Читать</a>
+                    <a href="{% url 'article_detail' article.id %}" class="btn btn-sm btn-outline-secondary ms-2">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">Новости не найдены</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

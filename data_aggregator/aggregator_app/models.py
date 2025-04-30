@@ -15,8 +15,8 @@ class Article(models.Model):
     upvotes = models.IntegerField(default=0, help_text='Положительный голос')
     downvotes = models.IntegerField(default=0, help_text='Отрицательный голос')
 
-    class Meta:
-        ordering = ('-publication_date',)
+    # class Meta:
+    #     ordering = ('-publication_date',)
 
     @property
     def rating(self):
