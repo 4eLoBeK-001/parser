@@ -9,18 +9,20 @@ from .models import Article, ArticleStats, Vote
 
 def article_list(request):
     source = request.GET.get('source', 'all')
-
+    head_name = ''
     articles = Article.objects.all().order_by('-publication_date')
 
     if source != 'all':
         articles = articles.filter(source__iexact=source)
+        head_name = 'Новости от ' + source
 
     sources = Article.objects.values_list('source', flat=True).distinct()
 
     context = {
         'articles': articles,
         'sources': sources,
-        'current_source': source
+        'current_source': source,
+        'head_name': head_name
     }
     return render(request, 'aggregator_app/article_list.html', context)
 

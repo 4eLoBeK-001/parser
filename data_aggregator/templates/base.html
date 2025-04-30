@@ -9,8 +9,7 @@
         <header class="mb-4">
             <h1 class="display-4 text-center">
                 {% block heading %}
-                {{ heading|default:"Агрегатор новостей" }}
-                {{ source }}
+                {{ head_name|default:"Агрегатор новостей" }}
                 {% endblock heading %}
             </h1>
         </header>
