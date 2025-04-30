@@ -61,7 +61,7 @@ def article_stats(request):
         'top_views_articles': top_views_articles,
 
         'top_rating_articles': top_rating_articles,
-        'heading': 'Статистика'
+        'head_name': 'Статистика'
     }
     return render(request, 'aggregator_app/stats.html', context)
 

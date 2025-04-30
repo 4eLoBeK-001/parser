@@ -6,12 +6,16 @@
 </head>
 <body class="bg-light">
     <div class="container mt-4">
-        <header class="mb-4">
-            <h1 class="display-4 text-center">
+        <header class="mb-4 text-center">
+            <h1 class="display-4">
                 {% block heading %}
                 {{ head_name|default:"Агрегатор новостей" }}
                 {% endblock heading %}
             </h1>
+            <p class="lead text-muted">
+                <a href="{% url 'stats' %}">Статистика</a><br>
+                Всего статей: {{ news_count }}
+            </p>
         </header>
         <main>
             {% block content %}{% endblock %}
