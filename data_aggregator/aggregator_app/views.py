@@ -24,23 +24,6 @@ def article_list(request):
     }
     return render(request, 'aggregator_app/article_list.html', context)
 
-def habr_article_list(request):
-    articles = Article.objects.filter(source='Habr').order_by('-publication_date')
-    context = {
-        'articles': articles,
-        'source': Article.SourceChoice.HABR
-    }
-    return render(request, 'aggregator_app/habr_article_list.html', context)
-
-
-def vc_article_list(request):
-    articles = Article.objects.filter(source='Vc').order_by('-publication_date')
-    context = {
-        'articles': articles,
-        'source': Article.SourceChoice.VC
-    }
-    return render(request, 'aggregator_app/vc_article_list.html', context)
-
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article, id=article_id)
