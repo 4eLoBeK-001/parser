@@ -1,13 +1,17 @@
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.cache import cache_page
+
+import time
 
 from .forms import CreateCommentForm
 from .models import Article, ArticleStats, Vote
 # Create your views here.
 
-
+@cache_page(60 * 15, key_prefix='article_list')
 def article_list(request):
+
     source = request.GET.get('source', 'all')
     head_name = ''
     articles = Article.objects.all().order_by('-publication_date')
@@ -49,6 +53,8 @@ def article_detail(request, article_id):
     }
     return render(request, 'aggregator_app/article_detail.html', context)
 
+
+@cache_page(60 * 10, key_prefix='stat_page_data')
 def article_stats(request):
     articles = Article.objects.all()
     top_views_articles = articles.order_by('-statistic__views')[:5]

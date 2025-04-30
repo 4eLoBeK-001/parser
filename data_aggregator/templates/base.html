@@ -13,7 +13,11 @@
                 {% endblock heading %}
             </h1>
             <p class="lead text-muted">
+                {% if head_name %}
+                <a href="{% url 'home' %}">Домой</a><br>
+                {% else %}
                 <a href="{% url 'stats' %}">Статистика</a><br>
+                {% endif %}
                 Всего статей: {{ news_count }}
             </p>
         </header>
