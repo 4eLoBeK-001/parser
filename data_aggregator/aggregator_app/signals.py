@@ -3,6 +3,12 @@ from django.dispatch import receiver
 from .models import Article, ArticleStats
 from django.core.cache import cache
 
+@receiver([post_save], sender=Article)
+def create_article_stats(sender, instance, created, **kwargs):
+    if created:
+        ArticleStats.objects.create(article=instance)
+
+
 @receiver([post_save, post_delete], sender=Article)
 def invalidate_article_cache(sender, instance, **kwargs):
     
