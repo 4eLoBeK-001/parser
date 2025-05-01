@@ -4,6 +4,8 @@
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
+![Celery](https://img.shields.io/badge/celery-%23a9cc54.svg?style=for-the-badge&logo=celery&logoColor=ddf4a4)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
@@ -19,15 +21,20 @@
 ## 🌟 Особенности
 
 - Парсинг новостей с Habr и VC.ru
-- Система голосования (лайки/дизлайки)
+- Система голосования (лайки/дизлайки) с защитой от накрутки
 - Комментарии к статьям
-- Статистика просмотров
-- Периодические задачи (Celery Beat)
+- Статистика просмотров + (учёт уникальных просмотров)
+- Периодические задачи (Celery)
 - Кеширование (Redis)
-- Docker-контейнеризация
+
 
 ## О приложении
-На главной странице 
+- 📰 Автоматически собирает новости с Habr и VC.ru (парсинг каждые 15 минут)
+- 🔍 Показывает статьи с возможностью фильтрации по источникам
+- 👍👎 Система голосования (лайки/дизлайки) с защитой от накрутки
+- 💬 Комментарии к статьям
+- 📊 Статистика просмотров и популярности статей
+
 
 ## Основные библиотеки
 - Django==5.2
@@ -68,7 +75,7 @@
     Введите в командной строке:
 
     `docker compose exec web python manage.py shell`
-    
+
     а затем это:
     ```python
     from aggregator_app.tasks import parser_periodic_task
