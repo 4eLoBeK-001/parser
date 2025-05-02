@@ -85,7 +85,7 @@ def article_downvote(request, article_id):
 
 def _handle_vote(request, article_id, vote_type):
     article = get_object_or_404(Article, id=article_id)
-    user = request.user
+    user = request.user if request.user.is_authenticated else None
     ip = request.META.get('REMOTE_ADDR')
 
     vote = Vote.objects.filter(Q(article=article) & (Q(user=user) | Q(ip_address=ip))).exists()
@@ -94,8 +94,8 @@ def _handle_vote(request, article_id, vote_type):
         raise PermissionDenied('Вы уже голосовали за эту статью')
     else:
         Vote.objects.create(
-            article=article, 
-            user=user if user.is_authenticated else None,
+            article=article,
+            user=user,
             ip_address=ip,
             vote_type=vote_type
         )
