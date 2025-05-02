@@ -30,13 +30,16 @@ services:
   
   celery_worker:
     build: .
-    command: celery -A data_aggregator worker --loglevel=info
+    command: >
+      sh -c "celery -A data_aggregator worker --loglevel=info &&
+      python manage.py shell -c 'from aggregator_app.tasks import parser_periodic_task; parser_periodic_task.delay()'"
 
     volumes:
       - .:/app
     depends_on:
       - db
       - redis
+
   celery_beat:
     build: .
     command: celery -A data_aggregator beat --loglevel=info
